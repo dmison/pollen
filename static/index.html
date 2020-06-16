@@ -3,7 +3,6 @@
       <script>
           var evtSource = new EventSource("/date");
           evtSource.onmessage = function(e) {
-            console.log('hey')
               document.getElementById('response').innerText = JSON.stringify(e)
           }
       </script>
