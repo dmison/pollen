@@ -1,5 +1,6 @@
 import os.path
-from tornado import httpserver, ioloop, web
+from json.decoder import JSONDecodeError
+from tornado import httpserver, ioloop, web, escape
 from tornado.options import define, options
 from tornadose.handlers import EventSource
 from tornadose.stores import QueueStore
@@ -13,20 +14,26 @@ define("debug", default=False, help="run in debug mode", type=bool)
 class AddHandler(web.RequestHandler):
 
     async def post(self):
-        store.submit(self.request.body)
+        try:
+            data = escape.json_decode(self.request.body)
+            store.submit(escape.json_encode(data))
+        except JSONDecodeError:
+            raise web.HTTPError(400, "Invalid JSON")
+        except Exception:
+            raise web.HTTPError(500, "opps")
 
 
 if __name__ == "__main__":
     options.parse_command_line()
-    static_path = os.path.abspath(
-        "static/"
-    )
+    static_path = os.path.abspath("static/")
     app = web.Application(
         debug=options.debug,
         handlers=[
             (r"/add", AddHandler),
             (r"/events", EventSource, {'store': store}),
-            (r"/(index\.html)", web.StaticFileHandler, dict(path=static_path)),
+            (r"/(.*)",
+                web.StaticFileHandler,
+                dict(path=static_path, default_filename="index.html")),
         ]
     )
 

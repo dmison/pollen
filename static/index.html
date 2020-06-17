@@ -1,12 +1,60 @@
 <html>
   <body>
       <script>
-          var evtSource = new EventSource("/date");
+          var evtSource = new EventSource("/events");
           evtSource.onmessage = function(e) {
-              document.getElementById('response').innerText = JSON.stringify(e)
+            console.log(e.data)
+
+              const data = JSON.stringify(JSON.parse(e.data), null, 2)
+              console.log(data)
+              document.getElementById('response').innerText = data
           }
       </script>
-      <h1>Response from server:</h1>
-      <div id="response"></div>
+    <heading>
+        <img src="/favicon.ico" />
+        <h1> Pollen <label>It's better than polling</label></h1>
+
+    </heading>
+      <h3>Response from server:</h3>
+      <code><pre id="response"></pre></code>
   </body>
+  <style>
+      body {
+          padding: 10px 20px;
+      }
+      heading {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+      }
+      heading img {
+          flex-grow: 0;
+      }
+      heading h1 {
+          display: flex;
+          flex-grow: 1;
+          flex-direction: column;
+          padding: 0px;
+          margin: 0px;
+          font-size: 24px;
+      }
+      heading h1 label {
+          font-size: 16px;
+      }
+
+      img {
+          height: 64px;
+          width: 64px;
+      }
+
+      code pre {
+          background-color: lightgrey;
+          border: 1px solid grey;
+          border-radius: 5px;
+          padding: 15px;
+          display: inline-block;
+          min-width: 200px;
+      }
+
+  </style>
 </html>
