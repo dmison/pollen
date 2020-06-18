@@ -9,5 +9,4 @@ COPY . /pollen
 WORKDIR /pollen
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python"]
-CMD ["/pollen/src/app.py"]
+ENTRYPOINT ["python", "/pollen/src/app.py"]
