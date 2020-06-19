@@ -21,9 +21,12 @@
 name: Build and Deploy to GKE
 
 on:
-  release:
-    types: [created]
-
+  push:
+    branches:
+      - master
+  # release:
+  #   types: [created]
+    
 # Environment variables available to all jobs and steps in this workflow
 env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
