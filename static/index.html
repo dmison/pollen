@@ -1,44 +1,54 @@
-<html>
+<html lang="en">
   <body>
       <script>
-          var evtSource = new EventSource("/events");
-          evtSource.onmessage = function(e) {
-            console.log(e.data)
+          const token = 'oh hai'
+          const evtSource = new EventSource(`/sse/v1/events/listen/${token}`, {withCredentials:true});
 
+          evtSource.onmessage = function(e) {
               const data = JSON.stringify(JSON.parse(e.data), null, 2)
-              console.log(data)
               document.getElementById('response').innerText = data
           }
+          evtSource.onerror = function(e){
+              console.log('opps', e)
+          }
+          function login(){
+
+          }
       </script>
-    <heading>
-        <img src="/favicon.ico" />
+    <header>
+        <img src="/favicon.ico"  alt="Pollen Logo"/>
         <h1> Pollen <label>It's better than polling</label></h1>
 
-    </heading>
+    </header>
       <h3>Response from server:</h3>
-      <code><pre id="response"></pre></code>
+      <pre id="response"></pre>
+      <form action="/login" method="post" id="login">
+        Name: <input type="text" name="name">
+        <input type="input" value="Sign in" onClick="login">
+    </form>
+
   </body>
   <style>
       body {
           padding: 10px 20px;
       }
-      heading {
+      header {
           display: flex;
           flex-direction: row;
           align-items: flex-start;
       }
-      heading img {
+      header img {
           flex-grow: 0;
       }
-      heading h1 {
+      header h1 {
           display: flex;
           flex-grow: 1;
           flex-direction: column;
-          padding: 0px;
-          margin: 0px;
+          padding: 0;
+          margin: 0;
           font-size: 24px;
       }
-      heading h1 label {
+      header h1 label {
           font-size: 16px;
       }
 
