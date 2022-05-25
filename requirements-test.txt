@@ -1,6 +1,6 @@
 black==19.10b0
 flake8==3.8.3
-PyJWT==1.7.1
+PyJWT==2.4.0
 pylint==2.5.3
 tornado==6.0.4
 tornadose==0.4.1
