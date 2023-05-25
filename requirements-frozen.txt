@@ -16,7 +16,7 @@ pylint==2.5.3
 regex==2020.6.8
 six==1.15.0
 toml==0.10.1
-tornado==6.0.4
+tornado==6.3.2
 tornadose==0.4.1
 typed-ast==1.4.1
 wrapt==1.12.1
